@@ -3,17 +3,338 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>KRYPTEIA Running Club</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ============================================
+       KRYPTEIA — HERO STYLES
+       ============================================ */
+
+    :root {
+      --gold:       #c9973f;
+      --gold-light: #e0b96a;
+      --gold-dark:  #7a5822;
+      --near-black: #09090b;
+      --dark-surface: #111116;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      background: var(--near-black);
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+    }
+
+    /* ---- NAV ---- */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 3rem;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.88) 0%, transparent 100%);
+    }
+
+    .nav .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.7rem;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .nav nav { display: flex; gap: 0; }
+
+    .nav nav a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-left: 2.2rem;
+      transition: color 0.2s;
+    }
+
+    .nav nav a:hover { color: var(--gold); }
+
+    /* ---- HERO ---- */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background-color: var(--near-black);
+    }
+
+    /* Imagen de fondo — apunta a tu archivo real */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/hero-bg.jpg'); /* ← reemplaza con tu ruta */
+      background-size: cover;
+      background-position: center 25%;
+      opacity: 0.38;
+      z-index: 0;
+    }
+
+    /* Degradados oscuros sobre la imagen */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(108deg,
+          rgba(0,0,0,0.96) 0%,
+          rgba(0,0,0,0.70) 42%,
+          rgba(0,0,0,0.20) 100%),
+        linear-gradient(to top,
+          rgba(0,0,0,0.90) 0%,
+          transparent 38%);
+    }
+
+    /* Líneas diagonales doradas */
+    .hero-diag {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .hero-diag::before,
+    .hero-diag::after,
+    .hero-diag .d3 {
+      content: '';
+      position: absolute;
+      top: -40%;
+      height: 180%;
+      transform-origin: top left;
+      transform: rotate(-32deg);
+    }
+
+    .hero-diag::before {
+      left: 40%;
+      width: 2px;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        var(--gold-dark) 25%,
+        var(--gold) 50%,
+        var(--gold-dark) 75%,
+        transparent 100%);
+      opacity: 0.6;
+    }
+
+    .hero-diag::after {
+      left: 44%;
+      width: 1px;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        var(--gold-dark) 30%,
+        var(--gold-light) 50%,
+        var(--gold-dark) 70%,
+        transparent 100%);
+      opacity: 0.28;
+    }
+
+    /* Tercera línea sutil */
+    .hero-diag .d3 {
+      display: block;
+      left: 48%;
+      width: 1px;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        var(--gold-dark) 40%,
+        var(--gold-dark) 60%,
+        transparent 100%);
+      opacity: 0.15;
+    }
+
+    /* Contenido */
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      padding: 9rem 3rem 5rem;
+      max-width: 660px;
+    }
+
+    .hero-content .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.2s;
+    }
+
+    .hero-content .eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 36px;
+      height: 1px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .hero-content h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5.5rem, 14vw, 10rem);
+      line-height: 0.88;
+      letter-spacing: 0.04em;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 0.75s ease forwards 0.35s;
+    }
+
+    /* Línea dorada bajo el h1 */
+    .hero-title-line {
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      margin: 0.6rem 0 1.4rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.5s;
+    }
+
+    .hero-content h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1.3rem, 3.2vw, 1.8rem);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.88);
+      line-height: 1.25;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.55s;
+    }
+
+    .hero-text {
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.65;
+      max-width: 440px;
+      margin-bottom: 2.2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.7s;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.85s;
+    }
+
+    /* Botones hero */
+    .btn {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.85rem 2.2rem;
+      transition: all 0.22s ease;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      background: var(--gold);
+      color: #0a0a0c;
+      border: 2px solid var(--gold);
+    }
+
+    .btn.primary:hover {
+      background: var(--gold-light);
+      border-color: var(--gold-light);
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: rgba(255,255,255,0.85);
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .btn.secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 3rem;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 1.2s;
+    }
+
+    .hero-scroll::before {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--gold-dark), transparent);
+    }
+
+    /* Animaciones */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .nav { padding: 1.2rem 1.4rem; }
+      .hero-content { padding: 8rem 1.4rem 4rem; }
+      .hero-scroll { left: 1.4rem; }
+      .hero-diag::before { left: 70%; }
+      .hero-diag::after  { left: 76%; }
+    }
+
+  </style>
 </head>
 
 <body>
 
+<!-- NAV -->
 <header class="nav">
   <div class="logo">KRYPTEIA</div>
-
   <nav>
     <a href="#about">Club</a>
     <a href="#training">Entrenos</a>
@@ -22,13 +343,28 @@
   </nav>
 </header>
 
+<!-- HERO -->
 <section class="hero">
+
+  <!-- Imagen de fondo -->
+  <div class="hero-bg"></div>
+
+  <!-- Overlays oscuros -->
   <div class="hero-overlay"></div>
 
+  <!-- Líneas diagonales doradas -->
+  <div class="hero-diag">
+    <span class="d3"></span>
+  </div>
+
+  <!-- Contenido -->
   <div class="hero-content">
+
     <p class="eyebrow">Running Club / Discipline / Community</p>
 
     <h1>KRYPTEIA</h1>
+
+    <div class="hero-title-line"></div>
 
     <h2>No corres para escapar.<br>Corres para convertirte.</h2>
 
@@ -41,15 +377,20 @@
       <a href="#join" class="btn primary">Solicitar ingreso</a>
       <a href="#about" class="btn secondary">Conocer el club</a>
     </div>
+
   </div>
+
+  <!-- Scroll cue -->
+  <div class="hero-scroll">Scroll</div>
+
 </section>
 
+<!-- ABOUT -->
 <section id="about" class="section about">
   <div class="section-header">
     <p class="eyebrow">The Mindset</p>
     <h2>No somos solo un club de running.</h2>
   </div>
-
   <p class="big-text">
     KRYPTEIA es una comunidad construida alrededor de la disciplina,
     la resiliencia y la mejora constante. Corremos juntos para formar
@@ -57,25 +398,23 @@
   </p>
 </section>
 
+<!-- PILLARS -->
 <section class="section pillars">
   <div class="card">
     <span>01</span>
     <h3>Disciplina</h3>
     <p>Llegar incluso cuando no tienes ganas.</p>
   </div>
-
   <div class="card">
     <span>02</span>
     <h3>Fuerza</h3>
     <p>Superar tus propios límites físicos y mentales.</p>
   </div>
-
   <div class="card">
     <span>03</span>
     <h3>Resiliencia</h3>
     <p>Seguir avanzando cuando la ruta se pone difícil.</p>
   </div>
-
   <div class="card">
     <span>04</span>
     <h3>Comunidad</h3>
@@ -83,28 +422,25 @@
   </div>
 </section>
 
+<!-- TRAINING -->
 <section id="training" class="section dark">
   <div class="section-header">
     <p class="eyebrow">Training System</p>
     <h2>Entrenamientos</h2>
   </div>
-
   <div class="training-grid">
     <div class="training-card">
       <h3>Road Running</h3>
       <p>Rutas urbanas para 5K, 10K y medio maratón.</p>
     </div>
-
     <div class="training-card">
       <h3>Speed Sessions</h3>
       <p>Intervalos, técnica, potencia y ritmo.</p>
     </div>
-
     <div class="training-card">
       <h3>Long Runs</h3>
       <p>Fondos de resistencia para construir mentalidad.</p>
     </div>
-
     <div class="training-card">
       <h3>Trail Running</h3>
       <p>Montaña, desnivel, aventura y comunidad.</p>
@@ -112,31 +448,28 @@
   </div>
 </section>
 
+<!-- SCHEDULE -->
 <section class="section schedule">
   <div class="section-header">
     <p class="eyebrow">Weekly Ritual</p>
     <h2>Calendario base</h2>
   </div>
-
   <div class="schedule-grid">
     <div>
       <strong>Martes</strong>
       <span>6:00 AM</span>
       <p>Speed Session</p>
     </div>
-
     <div>
       <strong>Jueves</strong>
       <span>7:00 PM</span>
       <p>Night Run</p>
     </div>
-
     <div>
       <strong>Sábado</strong>
       <span>7:00 AM</span>
       <p>Community Run</p>
     </div>
-
     <div>
       <strong>Domingo</strong>
       <span>Libre</span>
@@ -145,12 +478,12 @@
   </div>
 </section>
 
+<!-- TRIBE -->
 <section class="section tribe">
   <div class="section-header">
     <p class="eyebrow">The Tribe</p>
     <h2>Más que kilómetros.</h2>
   </div>
-
   <div class="photo-grid">
     <div></div>
     <div></div>
@@ -159,19 +492,17 @@
   </div>
 </section>
 
+<!-- MERCH -->
 <section id="merch" class="section merch">
   <div class="merch-text">
     <p class="eyebrow">Official Gear</p>
     <h2>Wear the mindset.</h2>
-
     <p>
       Playeras, hoodies, gorras, botellas y accesorios diseñados para portar
       la identidad del club dentro y fuera del entrenamiento.
     </p>
-
     <a href="#join" class="btn primary">Quiero merch</a>
   </div>
-
   <div class="merch-box">
     <div class="mockup shirt">T-Shirt</div>
     <div class="mockup hoodie">Hoodie</div>
@@ -179,44 +510,40 @@
   </div>
 </section>
 
+<!-- STATS -->
 <section class="section stats">
   <div>
     <h3>120+</h3>
     <p>Miembros</p>
   </div>
-
   <div>
     <h3>35+</h3>
     <p>Carreras</p>
   </div>
-
   <div>
     <h3>500+</h3>
     <p>Entrenamientos</p>
   </div>
 </section>
 
+<!-- JOIN -->
 <section id="join" class="section join">
   <div class="section-header center">
     <p class="eyebrow">Apply Now</p>
     <h2>Solicita tu ingreso</h2>
-    <p>
-      Déjanos tus datos y te contactaremos para integrarte al próximo entrenamiento.
-    </p>
+    <p>Déjanos tus datos y te contactaremos para integrarte al próximo entrenamiento.</p>
   </div>
-
   <form name="krypteia-leads" method="POST" data-netlify="true">
     <input type="hidden" name="form-name" value="krypteia-leads" />
-
-    <input type="text" name="name" placeholder="Nombre completo" required />
+    <input type="text"  name="name"  placeholder="Nombre completo" required />
     <input type="email" name="email" placeholder="Correo electrónico" required />
-    <input type="text" name="city" placeholder="Ciudad" />
-    <input type="text" name="level" placeholder="Nivel: principiante, intermedio o avanzado" />
-
+    <input type="text"  name="city"  placeholder="Ciudad" />
+    <input type="text"  name="level" placeholder="Nivel: principiante, intermedio o avanzado" />
     <button type="submit">Enviar solicitud</button>
   </form>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <h2>KRYPTEIA</h2>
   <p>Run with purpose. Live with discipline.</p>
